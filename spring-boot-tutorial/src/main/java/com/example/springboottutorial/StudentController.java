@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -22,10 +23,10 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> read(@PathVariable("id") Long id) {
+    public ResponseEntity<Student> read(@PathVariable("id") Long id) throws NoHandlerFoundException {
         Student foundStudent = service.read(id);
         if (foundStudent == null) {
-            return new ResponseEntity<Object>("Not found", HttpStatus.NOT_FOUND);
+            throw new NoHandlerFoundException("GET","id",null);
         } else {
             return ResponseEntity.ok(foundStudent);
         }
