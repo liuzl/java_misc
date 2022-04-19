@@ -1,21 +1,23 @@
 package com.example.springboottutorial;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.springboottutorial.exception.DetailErrorException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
 @RequestMapping("/students")
 public class StudentController {
-    @Autowired
-    private StudentService service;
+
+    private final StudentService service;
+
+    StudentController(StudentService studentService){
+        this.service = studentService;
+    }
 
     @GetMapping("/")
     public List<Student> read() {
@@ -23,10 +25,10 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> read(@PathVariable("id") Long id) throws NoHandlerFoundException {
+    public ResponseEntity<Student> read(@PathVariable("id") Long id)  {
         Student foundStudent = service.read(id);
         if (foundStudent == null) {
-            throw new NoHandlerFoundException("GET","id",null);
+            throw new DetailErrorException(HttpStatus.NOT_FOUND, String.format("%d not found", id));
         } else {
             return ResponseEntity.ok(foundStudent);
         }
