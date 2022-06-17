@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -44,7 +45,7 @@ public class StudentController {
     }
 
     @PostMapping("")
-    public Student create(@Valid @RequestBody Student student) {
+    public Student create(@Valid @NotNull @RequestBody Student student) {
         return this.studentRepository.save(student);
     }
 

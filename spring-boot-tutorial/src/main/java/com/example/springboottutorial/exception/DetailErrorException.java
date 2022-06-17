@@ -19,10 +19,6 @@ public class DetailErrorException extends NestedRuntimeException {
         this(status, message, null, null);
     }
 
-    public DetailErrorException(HttpStatus status, String message, @Nullable List<String> details) {
-        this(status, message, details, null);
-    }
-
     public DetailErrorException(HttpStatus status, String message, @Nullable List<String> details, @Nullable Throwable cause) {
         super(null, cause);
         Assert.notNull(status, "status is required");

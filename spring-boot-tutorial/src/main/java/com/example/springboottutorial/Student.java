@@ -9,7 +9,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -18,22 +19,28 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "students")
-@SQLDelete(sql="UPDATE students SET deleted_at = NOW() WHERE id = ?")
+@SQLDelete(sql = "UPDATE students SET deleted_at = NOW() WHERE id = ?")
 @Where(clause = "deleted_at IS NULL")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @NotBlank
     String firstName;
-    @NotBlank
     String lastName;
 
-    @Column(name="ok")
+    @Email
+    @NotEmpty
+    String email;
+
+    @NotEmpty
+    @ValidPassword
+    String password;
+
+    @Column(name = "ok")
     boolean isAjoke;
 
-    @Column(name="ok1")
+    @Column(name = "ok1")
     boolean axoke;
 
     Date createdAt;
