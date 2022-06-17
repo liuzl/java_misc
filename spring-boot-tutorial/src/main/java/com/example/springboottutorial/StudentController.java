@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -13,13 +14,10 @@ import java.util.List;
 @RequestMapping("/students")
 public class StudentController {
 
-    private final StudentRepository studentRepository;
+    @Resource
+    private StudentRepository studentRepository;
 
-    StudentController(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
-
-    @GetMapping("/")
+    @GetMapping("")
     public ListResponse<Student> getStudentList(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                                 @RequestParam(value = "size", defaultValue = "10") Integer size) {
         if (page < 0) {
@@ -45,7 +43,7 @@ public class StudentController {
                 .orElseThrow(() -> new DetailErrorException(HttpStatus.NOT_FOUND, String.format("%d not found", id)));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public Student create(@Valid @RequestBody Student student) {
         return this.studentRepository.save(student);
     }
