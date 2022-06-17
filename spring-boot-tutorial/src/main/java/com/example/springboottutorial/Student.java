@@ -37,6 +37,9 @@ public class Student {
     @ValidPassword
     String password;
 
+    @ValidCountryCode3
+    String iso3;
+
     @Column(name = "ok")
     boolean isAjoke;
 
