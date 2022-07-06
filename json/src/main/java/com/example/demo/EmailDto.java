@@ -10,7 +10,15 @@ import lombok.ToString;
 @Setter
 @ToString
 public class EmailDto {
-    private String email;
+    private String fromEmail;
     private String firstName;
     private String lastName;
+    private To to;
+
+    @Getter
+    @Setter
+    public static class To {
+        String email;
+        String fullName;
+    }
 }

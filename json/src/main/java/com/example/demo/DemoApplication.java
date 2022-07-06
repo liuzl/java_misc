@@ -20,12 +20,16 @@ public class DemoApplication implements CommandLineRunner {
     public void run(String... args) throws JsonProcessingException {
         log.info(args.length + " args");
         EmailDto dto = new EmailDto();
-        dto.setEmail("cx@sf.cc");
+        dto.setFirstName("cx@sf.cc");
         dto.setFirstName("Zhangxin");
         dto.setLastName("Liu");
+        dto.setTo(new EmailDto.To());
+        dto.getTo().email = "billg@microsoft.com";
+        dto.getTo().fullName = "Bill Gates";
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
         String json = mapper.writeValueAsString(dto);
-        log.info(dto + ":" + json);
+        log.info("json: " + json);
     }
 }
